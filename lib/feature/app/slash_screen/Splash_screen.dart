@@ -19,7 +19,8 @@ class _MyWidgetState extends State<splash> {
   _navigatetologin() async {
     await Future.delayed(Duration(seconds: 3), () {});
     if (mounted) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(),),
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()),
+               (Route<dynamic> route) => false,
       );
     }
   }
