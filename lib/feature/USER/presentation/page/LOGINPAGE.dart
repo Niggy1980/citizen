@@ -4,6 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+
+
+final CollectionReference account = FirebaseFirestore.instance.collection('account');
+
+Future Information() async{
+  QuerySnapshot querySnapshot =await FirebaseFirestore.instance.collection('account').get();
+}
+
+
+
 class LoginPage extends StatelessWidget {
       LoginPage({super.key});
 
@@ -64,9 +74,10 @@ class LoginPage extends StatelessWidget {
                         child:  SizedBox(
                           width: 350,height: 50,
                           child: TextField(
+                              obscureText: true,
                               decoration: InputDecoration(border: OutlineInputBorder(),
                                   icon: Icon(Icons.key,color: Colors.blue,size: 40,),
-                                  labelText: "Enter your Password")
+                                  labelText: "Enter your Password",)
                           ),
                         ),
                       )
@@ -111,7 +122,7 @@ class LoginPage extends StatelessWidget {
                         Container(
                           child: TextButton(
                             onPressed: (){Navigator.of(context).push(
-                              MaterialPageRoute(builder: (_) => ReGister()),
+                              MaterialPageRoute(builder: (_) => Register()),
                             );},
                             child: Text("register"),
                           ),

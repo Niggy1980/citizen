@@ -30,6 +30,8 @@ environment:
 dependencies:
   cloud_firestore: ^4.15.4
   firebase_core: ^2.25.4
+  intl: ^0.17.0
+  fluttertoast: ^8.0.7
   flutter:
     sdk: flutter
 
