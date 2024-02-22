@@ -1,3 +1,7 @@
+import 'package:citizen/feature/USER/presentation/Homepage/HomePage.dart';
+import 'package:citizen/feature/USER/presentation/Homepage/NewsPage.dart';
+import 'package:citizen/feature/USER/presentation/Homepage/ProfilePage.dart';
+import 'package:citizen/feature/USER/presentation/page/LOGINPAGE.dart';
 import 'package:flutter/material.dart';
 import 'package:citizen/feature/app/slash_screen/Splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,9 +37,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(debugShowCheckedModeBanner: false,
-        home: splash()
+        home: splash(),
+        routes: {
+          '/newspage': (context) => NewsPage(),
+          '/profilepage': (context) => ProfilePage(),
+          '/homepage': (context) => HomePage(),
+          '/loginpage' : (context) => LoginPage(),
 
-
+        }
 
     );
   }
