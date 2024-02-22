@@ -343,11 +343,7 @@ class Register extends StatelessWidget {
                     } else {
                       Create();
                       AlertDialog alert = AlertDialog(
-                        title: Text('Success',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        title: Text('Success', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold,)),
                         content: Text("Account registered"),
                         actions: [
                           TextButton(

@@ -7,15 +7,12 @@ class splash extends StatefulWidget {
   @override
   State<splash> createState() => _MyWidgetState();
 }
-
-
 class _MyWidgetState extends State<splash> {
   @override
   void initState() {
     super.initState();
     _navigatetologin();
   }
-
   _navigatetologin() async {
     await Future.delayed(Duration(seconds: 3), () {});
     if (mounted) {

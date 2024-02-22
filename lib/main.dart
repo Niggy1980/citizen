@@ -29,9 +29,6 @@ class MyApp extends StatelessWidget {
   final Lastnamecontroller = TextEditingController();
   final CollectionReference account = FirebaseFirestore.instance.collection('account');
 
-
-
-
   @override
   Widget build(BuildContext context) {
 
