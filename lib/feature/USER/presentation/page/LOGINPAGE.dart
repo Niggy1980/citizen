@@ -110,7 +110,7 @@ class LoginPage extends StatelessWidget {
                       "Login",style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-
+                      Navigator.pushNamed(context, '/homepage');
 
                     },
                     style: ElevatedButton.styleFrom(backgroundColor: Colors.blue,),),
