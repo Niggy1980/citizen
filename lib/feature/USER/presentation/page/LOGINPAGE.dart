@@ -23,7 +23,6 @@ class LoginPage extends StatelessWidget {
           body: Center(
             child: (Column(
               children: [
-                Text("data"),
                 Padding(padding: EdgeInsets.only(top: 100)),
                 Container(
                   // decoration: BoxDecoration(boxShadow: [BoxShadow(
