@@ -11,10 +11,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final TextEditingController _TitleController = TextEditingController();
-  final TextEditingController _NameController = TextEditingController();
-  final TextEditingController _AddressController = TextEditingController();
-  final CollectionReference complaint = FirebaseFirestore.instance.collection('complaint');
+  final  _TitleController = TextEditingController();
+  final  _NameController = TextEditingController();
+  final  _AddressController = TextEditingController();
+  final  complaint = FirebaseFirestore.instance.collection('complaint');
 
   //add
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot])async{
@@ -70,7 +70,6 @@ class _HomePageState extends State<HomePage> {
 
                   Navigator.of(context).pop();
                 }
-
                     },
                 )
               ],
@@ -79,11 +78,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
   //delete
-
   //show snackbar
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,24 +94,31 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   final DocumentSnapshot documentSnapshot = streamSnapshort.data!.docs[index];
                   return Card(
-                    margin: const EdgeInsets.all(10),
-                    child: ListTile(
-                      title: Text(documentSnapshot['title']),
-                      subtitle: Text(documentSnapshot['name']),
-
-                    trailing: SizedBox(
-                      width: 100,
+                    child: Container(
                       child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () => _createOrUpdate(documentSnapshot)),
-                          IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () => (documentSnapshot.id)),
+                         Container(
+                           child: Column(
+                             children: [
+                               Text(documentSnapshot['title']),
+                               Text(documentSnapshot['name']),
+                               Text(documentSnapshot['address']),
+                             ],
+                           ),
+                         ),
+                          Container(
+                            child:   IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () => _createOrUpdate(documentSnapshot)),
+                          ),
+                          Container(
+                            child:   IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () => (documentSnapshot.id)),
+                          ),
                         ],
                       ),
-                    ),),
+                    ),
                   );
                 }
             );

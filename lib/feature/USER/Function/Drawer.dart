@@ -13,8 +13,10 @@ class MyDrawer extends StatelessWidget {
         children: [
           Column(children: [
           const DrawerHeader(
-            child: Icon(Icons.person,
-                size: 48),
+            child: Align(
+              alignment: Alignment.center,
+              child: Image(image: AssetImage('assets/image/LOGOCC.png'), width: 400,),
+            ),
           ),
           ListTile(
             leading: Icon(Icons.home),

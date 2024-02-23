@@ -42,10 +42,7 @@ class LoginPage extends StatelessWidget {
                   //   ),]),
                   child: Align(
                     alignment: Alignment.center,
-                    child: Image(
-                      image: AssetImage('assets/image/LOGOCC.png'),
-                      width: 400,
-                    ),
+                    child: Image(image: AssetImage('assets/image/LOGOCC.png'), width: 400,),
                   ),
                 ),
                 Row(
