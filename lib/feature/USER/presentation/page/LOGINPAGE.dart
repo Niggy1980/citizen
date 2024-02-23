@@ -122,7 +122,7 @@ class LoginPage extends StatelessWidget {
                 //   ),
                 // ), borderrrrrrrrrrr
                 Container(
-                    child: Align(
+                  child: Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
                     child: Text(
@@ -143,13 +143,12 @@ class LoginPage extends StatelessWidget {
                             String Role = data['role'];
                             print('id: $ID,password: $Password, role: $Role');
                             if (Role == 'user') {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (_) => HomePage()),
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()),
+                                    (Route<dynamic> route) => false,
                               );
                             } else {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (_) => MainAdminPage()),
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainAdminPage()),
+                                    (Route<dynamic> route) => false,
                               );
                             }
                           }
