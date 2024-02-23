@@ -19,7 +19,6 @@ void main() async {
           storageBucket: "citizen-project-c3f92.appspot.com",));
   runApp( MyApp());
 }
-
 class MyApp extends StatelessWidget {
      MyApp({super.key});
   final Idcontroller = TextEditingController();
