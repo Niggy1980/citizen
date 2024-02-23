@@ -9,10 +9,8 @@ class MainAdminPage extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
-          children: [
-            Text("adminpage")
-          ],
+        body: Center(
+          child: Text("admin",style: TextStyle(color: Colors.blue,fontSize: 50,fontWeight: FontWeight.bold),),
         ),
       ),
     );
