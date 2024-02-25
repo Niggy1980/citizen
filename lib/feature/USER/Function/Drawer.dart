@@ -7,12 +7,15 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.blue[200],
+      backgroundColor: Colors.blue[300],
       child:  Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(children: [
           const DrawerHeader(
+            decoration: BoxDecoration(
+             color: Colors.white,
+            ),
             child: Align(
               alignment: Alignment.center,
               child: Image(image: AssetImage('assets/image/LOGOCC.png'), width: 400,),
@@ -67,5 +70,6 @@ class MyDrawer extends StatelessWidget {
     ),
 
     );
+
   }
 }

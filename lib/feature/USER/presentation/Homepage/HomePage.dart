@@ -1,6 +1,8 @@
 import 'package:citizen/feature/USER/Function/Drawer.dart';
+import 'package:citizen/feature/USER/Function/NavBarBottom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 25,
                 ),
-                ElevatedButton(
+                ElevatedButton (
                     child: Text(action == 'create' ? 'Create' : 'Update'),
                     onPressed: () async {
                 final String? title = _TitleController.text;
@@ -71,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).pop();
                 }
                     },
+
                 )
               ],
             ),
@@ -85,6 +88,18 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: Text("Home"),
       ),
       drawer: MyDrawer(),
+      bottomNavigationBar: GNav(
+        backgroundColor: Color.fromRGBO(249, 247, 247, 1.0),
+        color: Colors.black,
+        activeColor: Colors.black,
+        tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
+        padding: EdgeInsets.all(16),
+        tabs: const [
+          GButton(icon: Icons.home, text: 'Home'),
+          GButton(icon: Icons.newspaper, text: 'News'),
+          GButton(icon: Icons.person, text: 'Profile'),
+        ],
+      ),
       body: StreamBuilder(
         stream: complaint.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
