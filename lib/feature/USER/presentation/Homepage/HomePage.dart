@@ -1,6 +1,8 @@
 import 'package:citizen/feature/USER/Function/Drawer.dart';
+import 'package:citizen/feature/USER/Function/NavBarBottom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 25,
                 ),
-                ElevatedButton(
+                ElevatedButton (
                     child: Text(action == 'create' ? 'Create' : 'Update'),
                     onPressed: () async {
                 final String? title = _TitleController.text;
@@ -71,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).pop();
                 }
                     },
+
                 )
               ],
             ),
@@ -78,13 +81,36 @@ class _HomePageState extends State<HomePage> {
     });
   }
   //delete
-  //show snackbar
+Future<void> _deleteProduct(String productId) async {
+    await complaint.doc(productId).delete();
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ลบเรียบร้อยเเล้ว')));
+}
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home"),
+      backgroundColor: Colors.white,
+      appBar: AppBar(title: Center(child:Image(image: AssetImage ('assets/image/LOGOCC.png'),width: 100,)),
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
       ),
       drawer: MyDrawer(),
+      bottomNavigationBar: GNav(
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
+        color: Colors.white,
+        activeColor: Colors.white,
+        tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
+        padding: EdgeInsets.all(16),
+        tabs: const [
+          GButton(icon: Icons.home, text: 'Home'),
+          GButton(icon: Icons.newspaper, text: 'News'),
+          GButton(icon: Icons.person, text: 'Profile'),
+        ],
+      ),
       body: StreamBuilder(
         stream: complaint.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
@@ -94,28 +120,37 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   final DocumentSnapshot documentSnapshot = streamSnapshort.data!.docs[index];
                   return Card(
+                    margin: const EdgeInsets.all(10),
                     child: Container(
                       child: Row(
                         children: [
-                         Container(
-                           child: Column(
-                             children: [
-                               Text(documentSnapshot['title']),
-                               Text(documentSnapshot['name']),
-                               Text(documentSnapshot['address']),
-                             ],
+                         Center(
+                           child: Container(
+                             child: Column(
+                               children: [
+                               Align(
+                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['title'])),
+                             Align(
+                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['name'])),
+                               Align(
+                                 alignment: Alignment.centerLeft,child : Text(documentSnapshot['address'])),
+                               ],
+                             ),
                            ),
                          ),
                           Container(
-                            child:   IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => _createOrUpdate(documentSnapshot)),
-                          ),
-                          Container(
-                            child:   IconButton(
+                            child:   Row(
+                              children: [
+                                IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () => _createOrUpdate(documentSnapshot)),
+                           IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () => (documentSnapshot.id)),
+                                onPressed: () => _deleteProduct(documentSnapshot.id)),
+                  ],
                           ),
+                          ),
+
                         ],
                       ),
                     ),
@@ -130,8 +165,10 @@ class _HomePageState extends State<HomePage> {
       ),
       //add new
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
         onPressed: () => _createOrUpdate(),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_comment,color: Color.fromRGBO(
+            255, 255, 255, 1.0),),
       ),
     );
   }
