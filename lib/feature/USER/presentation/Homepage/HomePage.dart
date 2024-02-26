@@ -90,6 +90,7 @@ Future<void> _deleteProduct(String productId) async {
 
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,6 +118,7 @@ Future<void> _deleteProduct(String productId) async {
                 itemBuilder: (context, index) {
                   final DocumentSnapshot documentSnapshot = streamSnapshort.data!.docs[index];
                   return Card(
+                    margin: const EdgeInsets.all(10),
                     child: Container(
                       child: Row(
                         children: [
@@ -134,7 +136,6 @@ Future<void> _deleteProduct(String productId) async {
                              ),
                            ),
                          ),
-                          SizedBox(height: 50,width: 500,),
                           Container(
                             child:   Row(
                               children: [
@@ -143,10 +144,11 @@ Future<void> _deleteProduct(String productId) async {
                                     onPressed: () => _createOrUpdate(documentSnapshot)),
                            IconButton(
                                 icon: const Icon(Icons.delete),
-                                onPressed: () => (documentSnapshot.id)),
+                                onPressed: () => _deleteProduct(documentSnapshot.id)),
                   ],
                           ),
-                  ),
+                          ),
+
                         ],
                       ),
                     ),
