@@ -81,7 +81,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
   //delete
-  //show snackbar
+Future<void> _deleteProduct(String productId) async {
+    await complaint.doc(productId).delete();
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ลบเรียบร้อยเเล้ว')));
+}
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,25 +120,33 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       child: Row(
                         children: [
-                         Container(
-                           child: Column(
-                             children: [
-                               Text(documentSnapshot['title']),
-                               Text(documentSnapshot['name']),
-                               Text(documentSnapshot['address']),
-                             ],
+                         Center(
+                           child: Container(
+                             child: Column(
+                               children: [
+                               Align(
+                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['title'])),
+                             Align(
+                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['name'])),
+                               Align(
+                                 alignment: Alignment.centerLeft,child : Text(documentSnapshot['address'])),
+                               ],
+                             ),
                            ),
                          ),
+                          SizedBox(height: 50,width: 500,),
                           Container(
-                            child:   IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => _createOrUpdate(documentSnapshot)),
-                          ),
-                          Container(
-                            child:   IconButton(
+                            child:   Row(
+                              children: [
+                                IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () => _createOrUpdate(documentSnapshot)),
+                           IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () => (documentSnapshot.id)),
+                  ],
                           ),
+                  ),
                         ],
                       ),
                     ),
@@ -146,7 +162,7 @@ class _HomePageState extends State<HomePage> {
       //add new
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_comment),
       ),
     );
   }
