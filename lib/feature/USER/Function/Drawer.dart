@@ -7,7 +7,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.blue[300],
+      backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
       child:  Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,8 +22,8 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title:  Text("H O M E"),
+            leading: Icon(Icons.home,color: Colors.white,),
+            title:  Text("H O M E"), textColor: Colors.white,
             onTap: () {
               Navigator.pop(context);
 
@@ -31,8 +31,8 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.newspaper),
-            title:  Text("N E W S"),
+            leading: Icon(Icons.newspaper,color: Colors.white,),
+            title:  Text("N E W S"),textColor: Colors.white,
             onTap: () {
               Navigator.pop(context);
 
@@ -41,8 +41,8 @@ class MyDrawer extends StatelessWidget {
           ),
           //
           ListTile(
-            leading: Icon(Icons.face),
-            title:  Text("P R O F I L E"),
+            leading: Icon(Icons.face,color: Colors.white,),
+            title:  Text("P R O F I L E"),textColor: Colors.white,
             onTap: () {
               Navigator.pop(context);
 
@@ -53,8 +53,8 @@ class MyDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 25.0),
             child: ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("L O G O U T"),
+              leading: Icon(Icons.logout,color: Colors.white,),
+              title: Text("L O G O U T"),textColor: Colors.white,
               onTap: (){
                 Navigator.pop(context);
 

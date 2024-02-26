@@ -94,13 +94,15 @@ Future<void> _deleteProduct(String productId) async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Home"),
+      backgroundColor: Colors.white,
+      appBar: AppBar(title: Center(child:Image(image: AssetImage ('assets/image/LOGOCC.png'),width: 100,)),
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
       ),
       drawer: MyDrawer(),
       bottomNavigationBar: GNav(
-        backgroundColor: Color.fromRGBO(249, 247, 247, 1.0),
-        color: Colors.black,
-        activeColor: Colors.black,
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
+        color: Colors.white,
+        activeColor: Colors.white,
         tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
         padding: EdgeInsets.all(16),
         tabs: const [
@@ -163,8 +165,10 @@ Future<void> _deleteProduct(String productId) async {
       ),
       //add new
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
         onPressed: () => _createOrUpdate(),
-        child: const Icon(Icons.add_comment),
+        child: const Icon(Icons.add_comment,color: Color.fromRGBO(
+            255, 255, 255, 1.0),),
       ),
     );
   }
