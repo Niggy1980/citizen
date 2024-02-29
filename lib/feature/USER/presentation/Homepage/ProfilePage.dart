@@ -16,12 +16,12 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       drawer: MyDrawer(),
       bottomNavigationBar: GNav(
-        backgroundColor: Color.fromRGBO(249, 247, 247, 1.0),
-        color: Colors.black,
-        activeColor: Colors.black,
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
+        color: Colors.white,
+        activeColor: Colors.white,
         tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
         padding: EdgeInsets.all(16),
         tabs: const [
@@ -31,8 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       appBar: AppBar(
-        title: Text("Profile"),
-        backgroundColor: Colors.blue[400],
+        title: Center (child:Image(image: AssetImage ('assets/image/citizenicon.png'),width: 50,)),
+        backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
       ),
       body: ListView(
         children: [

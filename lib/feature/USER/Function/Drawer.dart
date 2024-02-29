@@ -70,6 +70,5 @@ class MyDrawer extends StatelessWidget {
     ),
 
     );
-
   }
 }
