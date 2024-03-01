@@ -42,9 +42,7 @@ class MyApp extends StatelessWidget {
           '/profilepage': (context) => ProfilePage(),
           '/homepage': (context) => HomePage(),
           '/loginpage' : (context) => LoginPage(),
-
         }
-
     );
   }
 }

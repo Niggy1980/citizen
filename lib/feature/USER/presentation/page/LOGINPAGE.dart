@@ -6,13 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-final CollectionReference account =
-    FirebaseFirestore.instance.collection('account');
+final CollectionReference account = FirebaseFirestore.instance.collection('account');
 final Idcontroller = TextEditingController();
 final Passwordcontroller = TextEditingController();
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+      LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +99,9 @@ class LoginPage extends StatelessWidget {
                         child: TextField(
                             controller: Passwordcontroller,
                             obscureText: true,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Enter your Password",
-                            )),
+                            decoration: InputDecoration(border: OutlineInputBorder(),
+                              labelText: "Enter your Password",)
+                        ),
                       ),
                     )),
                   ],
@@ -130,7 +128,6 @@ class LoginPage extends StatelessWidget {
                       Future Information() async {
                         QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('account')
                             .where('id', isEqualTo: Idcontroller.text).where('password', isEqualTo: Passwordcontroller.text).get();
-
                         if (querySnapshot.docs.isNotEmpty) {
                           for (QueryDocumentSnapshot documentSnapshot
                               in querySnapshot.docs) {
@@ -177,8 +174,6 @@ class LoginPage extends StatelessWidget {
                         }
                       }
                       Information();
-
-
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,

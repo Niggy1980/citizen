@@ -116,7 +116,7 @@ class Register extends StatelessWidget {
                       child: TextField(
                           obscureText: true,
                           controller: Passwordcontroller,
-                          decoration: InputDecoration(border: OutlineInputBorder(), labelText: " Password")),
+                          decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Password")),
                     ),
                   )),
                 ],
