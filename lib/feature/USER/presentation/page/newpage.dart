@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth';
 
-class Newspage extends StatelessWidget {
-  const Newspage({super.key});
+void main() {
+  runApp(MyApp());
+}
 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('อุ'),
+        ),
+        body:  Center(
+          child: Text(
+            'หนึ่งสองเสียว',
 
+          ),
+        ),
       ),
-
     );
 
   }
