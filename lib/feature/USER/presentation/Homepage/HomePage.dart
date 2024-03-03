@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
       _TitleController.text = documentSnapshot['title'];
       _NameController.text = documentSnapshot['name'];
       _AddressController.text = documentSnapshot['address'];
+      _CommentController.text = documentSnapshot['comment'];
     }
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -62,20 +63,18 @@ class _HomePageState extends State<HomePage> {
                 final String? name = _NameController.text;
                 final String? address = _AddressController.text;
                 final String? comment = _CommentController.text;
-                if (title !=null && name !=null && address !=null){
+                if (title !=null && name !=null && address !=null ){
                   if (action == 'create'){
                     await complaint.add({"title":title,"name":name,"address":address,"comment":comment});
                   }
                   if (action == 'update'){
                     await complaint
                         .doc(documentSnapshot!.id)
-                        .update({'title':title,"name":name,"address":address,"comment":comment});
+                        .update({'title':title,"name":name,"address":address});
                   }
                   _TitleController.text='';
                   _NameController.text='';
                   _AddressController.text='';
-                  _CommentController.text='';
-
                   Navigator.of(context).pop();
                 }
                     },
@@ -198,6 +197,7 @@ Future<void> _deleteProduct(String productId) async {
                             Text(documentSnapshot['name']),
                             Text(documentSnapshot['address']),
                           ],
+
                         ),
                     SizedBox(width: 15,),
 
