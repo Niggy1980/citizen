@@ -4,10 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+
 class HomePage extends StatefulWidget {
-  final String postId;
+
   const HomePage({super.key,
-  required this.postId,
+
   });
 
   @override
@@ -19,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   final  _TitleController = TextEditingController();
   final  _NameController = TextEditingController();
   final  _AddressController = TextEditingController();
+  final  _CommentController = TextEditingController();
   final  complaint = FirebaseFirestore.instance.collection('complaint');
 
   //add
@@ -59,19 +61,20 @@ class _HomePageState extends State<HomePage> {
                 final String? title = _TitleController.text;
                 final String? name = _NameController.text;
                 final String? address = _AddressController.text;
-
+                final String? comment = _CommentController.text;
                 if (title !=null && name !=null && address !=null){
                   if (action == 'create'){
-                    await complaint.add({"title":title,"name":name,"address":address});
+                    await complaint.add({"title":title,"name":name,"address":address,"comment":comment});
                   }
                   if (action == 'update'){
                     await complaint
                         .doc(documentSnapshot!.id)
-                        .update({'title':title,"name":name,"address":address});
+                        .update({'title':title,"name":name,"address":address,"comment":comment});
                   }
                   _TitleController.text='';
                   _NameController.text='';
                   _AddressController.text='';
+                  _CommentController.text='';
 
                   Navigator.of(context).pop();
                 }
@@ -90,40 +93,53 @@ Future<void> _deleteProduct(String productId) async {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ลบเรียบร้อยเเล้ว')));
 }
 
-//comment controller
-  final _commentTextConterller = TextEditingController();
+//comment
+  Future<void> _comment([DocumentSnapshot? documentSnapshot])async{
+    String action = 'create';
+    if(documentSnapshot != null){
+      action = 'update';
+      _CommentController.text = documentSnapshot['comment'];
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context, builder: (BuildContext ctx){
+      return Padding(padding: EdgeInsets.only(top: 20,left: 20,right: 20,
+          bottom: MediaQuery.of(ctx).viewInsets.bottom+20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _CommentController,
+              decoration: const InputDecoration(labelText: 'ข้อความตอบกลับ'),
+            ),
+            const SizedBox(height: 25,
+            ),
+            ElevatedButton (
+              child: Text(action == 'create' ? 'Create' : 'Post'),
+              onPressed: () async {
+                final String? comment = _CommentController.text;
 
-//add a comment
-void addComment(String commentText) {
+                if (comment !=null ){
+                  if (action == 'create'){
+                    await complaint.add({"comment":comment,});
+                  }
+                  if (action == 'update'){
+                    await complaint
+                        .doc(documentSnapshot!.id)
+                        .update({'comment':comment,});
+                  }
+                  _CommentController.text='';
+                  Navigator.of(context).pop();
+                }
+              },
 
-    FirebaseFirestore.instance.collection("User Posts").doc(widget.postId).collection("Comments").add(
-        { "CommentText" : commentText,
-          "CommentTime" : Timestamp.now()
-        });
-}
-  // show a dialog box
-void showCommentDialog(){
-  showDialog(context: context, builder: (context) => AlertDialog(
-    title: Text("Add Comment"),
-    content: TextField(
-      controller: _commentTextConterller,
-      decoration: InputDecoration(hintText: "Comment..."),
-    ),
-    actions: [
-      //post
-      TextButton(onPressed: () => addComment(_commentTextConterller.text), child:Text("Post"),
-      ),
-      // cancel
-      TextButton(onPressed: () => Navigator.pop(context), child: Text("Cancel"),
-      ),
-    ],
-  ),
-  );
-}
-
-
-
-
+            )
+          ],
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,16 +199,37 @@ void showCommentDialog(){
                             Text(documentSnapshot['address']),
                           ],
                         ),
-                        Container( child: Row(
+                    SizedBox(width: 15,),
+
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                      ),
+                      margin: const EdgeInsets.only(bottom: 5),
+                      padding: EdgeInsets.all(15),
+                      child: Column(
+                        children: [
+                          Text(documentSnapshot['title'],)
+                        ],
+                      ),
+                    ),
+
+                  Align(
+                  alignment: Alignment.centerRight,
+                  child: Container( child: Row(
                           children: [
                             IconButton(icon:const Icon(Icons.edit),
                             onPressed: ()=> _createOrUpdate(documentSnapshot),),
                             IconButton(icon:const Icon(Icons.delete),
                               onPressed: ()=> _deleteProduct(documentSnapshot.id),),
+                            IconButton(icon:const Icon(Icons.comment),
+                              onPressed: ()=> _comment(documentSnapshot),),
+
                           ],
                         ),
 
-                        )
+                        ),
+                  ),
                       ],
                     ),
                   );
