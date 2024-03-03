@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String postId;
+  const HomePage({super.key,
+  required this.postId,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -87,6 +90,37 @@ Future<void> _deleteProduct(String productId) async {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ลบเรียบร้อยเเล้ว')));
 }
 
+//comment controller
+  final _commentTextConterller = TextEditingController();
+
+//add a comment
+void addComment(String commentText) {
+
+    FirebaseFirestore.instance.collection("User Posts").doc(widget.postId).collection("Comments").add(
+        { "CommentText" : commentText,
+          "CommentTime" : Timestamp.now()
+        });
+}
+  // show a dialog box
+void showCommentDialog(){
+  showDialog(context: context, builder: (context) => AlertDialog(
+    title: Text("Add Comment"),
+    content: TextField(
+      controller: _commentTextConterller,
+      decoration: InputDecoration(hintText: "Comment..."),
+    ),
+    actions: [
+      //post
+      TextButton(onPressed: () => addComment(_commentTextConterller.text), child:Text("Post"),
+      ),
+      // cancel
+      TextButton(onPressed: () => Navigator.pop(context), child: Text("Cancel"),
+      ),
+    ],
+  ),
+  );
+}
+
 
 
 
@@ -119,40 +153,47 @@ Future<void> _deleteProduct(String productId) async {
                 itemCount: streamSnapshort.data!.docs.length,
                 itemBuilder: (context, index) {
                   final DocumentSnapshot documentSnapshot = streamSnapshort.data!.docs[index];
-                  return Card(
-                    margin: const EdgeInsets.all(10),
-                    child: Container(
-                      child: Row(
-                        children: [
-                         Center(
-                           child: Container(
-                             child: Column(
-                               children: [
-                               Align(
-                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['title'])),
-                             Align(
-                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['name'])),
-                               Align(
-                                 alignment: Alignment.centerLeft,child : Text(documentSnapshot['address'])),
-                               ],
-                             ),
-                           ),
-                         ),
-                          Container(
-                            child:   Row(
-                              children: [
-                                IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () => _createOrUpdate(documentSnapshot)),
-                           IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () => _deleteProduct(documentSnapshot.id)),
-                  ],
-                          ),
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    margin: EdgeInsets.only(top: 25,left: 25,right: 25),
+                    padding: EdgeInsets.all(25),
+                    child: Row(
+                      children: [
+                        Container(
+                          child: Column (
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('เรื่อง:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                              Text('ชื่อ:'),
+                              Text('ที่อยู่:'),
+                            ],
                           ),
 
-                        ],
-                      ),
+                        ),
+                    SizedBox(width: 10,),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(documentSnapshot['title'],style:TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            Text(documentSnapshot['name']),
+                            Text(documentSnapshot['address']),
+                          ],
+                        ),
+                        Container( child: Row(
+                          children: [
+                            IconButton(icon:const Icon(Icons.edit),
+                            onPressed: ()=> _createOrUpdate(documentSnapshot),),
+                            IconButton(icon:const Icon(Icons.delete),
+                              onPressed: ()=> _deleteProduct(documentSnapshot.id),),
+                          ],
+                        ),
+
+                        )
+                      ],
                     ),
                   );
                 }
