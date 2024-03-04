@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
           title: Text('อุ'),
         ),
         body:  Center(
-          child: Text(
-            'หนึ่งสองเสียว',
+          child: Image.asset("assets/หหห"
+            ,
 
           ),
         ),
