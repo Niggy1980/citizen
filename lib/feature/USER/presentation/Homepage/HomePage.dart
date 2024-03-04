@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+
+  const HomePage({super.key,
+
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   final  _TitleController = TextEditingController();
   final  _NameController = TextEditingController();
   final  _AddressController = TextEditingController();
+  final  _CommentController = TextEditingController();
   final  complaint = FirebaseFirestore.instance.collection('complaint');
 
   //add
@@ -26,6 +30,7 @@ class _HomePageState extends State<HomePage> {
       _TitleController.text = documentSnapshot['title'];
       _NameController.text = documentSnapshot['name'];
       _AddressController.text = documentSnapshot['address'];
+      _CommentController.text = documentSnapshot['comment'];
     }
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -42,11 +47,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                 TextField(
                   controller: _NameController,
-                  decoration: const InputDecoration(labelText: 'ชื่อ  - นามสกุล'),
+                  decoration: const InputDecoration(labelText: 'ชื่อผู้ร้องเรียน'),
                 ),
                 TextField(
                   controller: _AddressController,
-                  decoration: const InputDecoration(labelText: 'ที่อยู่'),
+                  decoration: const InputDecoration(labelText: 'รายละเอียดสถานที่'),
                 ),
                 const SizedBox(height: 25,
                 ),
@@ -56,10 +61,10 @@ class _HomePageState extends State<HomePage> {
                 final String? title = _TitleController.text;
                 final String? name = _NameController.text;
                 final String? address = _AddressController.text;
-
-                if (title !=null && name !=null && address !=null){
+                final String? comment = _CommentController.text;
+                if (title !=null && name !=null && address !=null ){
                   if (action == 'create'){
-                    await complaint.add({"title":title,"name":name,"address":address});
+                    await complaint.add({"title":title,"name":name,"address":address,"comment":comment});
                   }
                   if (action == 'update'){
                     await complaint
@@ -69,7 +74,6 @@ class _HomePageState extends State<HomePage> {
                   _TitleController.text='';
                   _NameController.text='';
                   _AddressController.text='';
-
                   Navigator.of(context).pop();
                 }
                     },
@@ -87,9 +91,53 @@ Future<void> _deleteProduct(String productId) async {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('ลบเรียบร้อยเเล้ว')));
 }
 
+//comment
+  Future<void> _comment([DocumentSnapshot? documentSnapshot])async{
+    String action = 'create';
+    if(documentSnapshot != null){
+      action = 'update';
+      _CommentController.text = documentSnapshot['comment'];
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context, builder: (BuildContext ctx){
+      return Padding(padding: EdgeInsets.only(top: 20,left: 20,right: 20,
+          bottom: MediaQuery.of(ctx).viewInsets.bottom+20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _CommentController,
+              decoration: const InputDecoration(labelText: 'ข้อความตอบกลับ'),
+            ),
+            const SizedBox(height: 25,
+            ),
+            ElevatedButton (
+              child: Text(action == 'create' ? 'Create' : 'Post'),
+              onPressed: () async {
+                final String? comment = _CommentController.text;
 
+                if (comment !=null ){
+                  if (action == 'create'){
+                    await complaint.add({"comment":comment,});
+                  }
+                  if (action == 'update'){
+                    await complaint
+                        .doc(documentSnapshot!.id)
+                        .update({'comment':comment,});
+                  }
+                  _CommentController.text='';
+                  Navigator.of(context).pop();
+                }
+              },
 
-
+            )
+          ],
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +153,10 @@ Future<void> _deleteProduct(String productId) async {
         activeColor: Colors.white,
         tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
         padding: EdgeInsets.all(16),
-        tabs: const [
-          GButton(icon: Icons.home, text: 'Home'),
-          GButton(icon: Icons.newspaper, text: 'News'),
-          GButton(icon: Icons.person, text: 'Profile'),
+        tabs:  [
+          GButton(icon: Icons.home, text: 'Home',onPressed:(){ Navigator.pushNamed(context,'/homepage');},),
+          GButton(icon: Icons.newspaper, text: 'News',onPressed:(){ Navigator.pushNamed(context,'/newspage');},),
+          GButton(icon: Icons.notifications_active, text: 'Notification',onPressed:(){ Navigator.pushNamed(context,'/notipage');},),
         ],
       ),
       body: StreamBuilder(
@@ -118,45 +166,59 @@ Future<void> _deleteProduct(String productId) async {
             return ListView.builder(
                 itemCount: streamSnapshort.data!.docs.length,
                 itemBuilder: (context, index) {
-                  final DocumentSnapshot documentSnapshot = streamSnapshort.data!.docs[index];
-                  return Card(
-                    margin: const EdgeInsets.all(10),
-                    child: Container(
-                      child: Row(
-                        children: [
-                         Center(
-                           child: Container(
-                             child: Column(
-                               children: [
-                               Align(
-                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['title'])),
-                             Align(
-                               alignment: Alignment.centerLeft,child: Text(documentSnapshot['name'])),
-                               Align(
-                                 alignment: Alignment.centerLeft,child : Text(documentSnapshot['address'])),
-                               ],
-                             ),
-                           ),
-                         ),
-                          Container(
-                            child:   Row(
-                              children: [
-                                IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () => _createOrUpdate(documentSnapshot)),
-                           IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () => _deleteProduct(documentSnapshot.id)),
-                  ],
-                          ),
-                          ),
+                  final DocumentSnapshot documentSnapshot = streamSnapshort
+                      .data!.docs[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    margin: EdgeInsets.only(top: 25, left: 25, right: 25),
+                    padding: EdgeInsets.all(25),
+                    child:
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(documentSnapshot['title'],
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight
+                              .bold),),
+                        Text(documentSnapshot['name']),
+                        Text(documentSnapshot['address']),
 
-                        ],
-                      ),
+
+                        SizedBox(height: 10,),
+                        Container( child: Row( mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(icon:const Icon(Icons.comment),
+                              onPressed: ()=> _comment(documentSnapshot),),
+                            IconButton(icon:const Icon(Icons.edit),
+                              onPressed: ()=> _createOrUpdate(documentSnapshot),),
+                            IconButton(icon:const Icon(Icons.delete),
+                              onPressed: ()=> _deleteProduct(documentSnapshot.id),),
+                          ],
+                        ),
+
+                        ),
+                        SizedBox(height: 10,),
+
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                          ),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.only(left: 50,right: 50,top: 20),
+                          child: Column(
+                            children: [
+                              Center(child: Text(documentSnapshot['comment'],textAlign: TextAlign.center,))
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 }
             );
+
           }
           return const Center(
             child: CircularProgressIndicator(),

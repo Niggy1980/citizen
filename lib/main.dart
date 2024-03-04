@@ -1,5 +1,6 @@
 import 'package:citizen/feature/USER/presentation/Homepage/HomePage.dart';
 import 'package:citizen/feature/USER/presentation/Homepage/NewsPage.dart';
+import 'package:citizen/feature/USER/presentation/Homepage/NotiPage.dart';
 import 'package:citizen/feature/USER/presentation/Homepage/ProfilePage.dart';
 import 'package:citizen/feature/USER/presentation/page/LOGINPAGE.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           '/profilepage': (context) => ProfilePage(),
           '/homepage': (context) => HomePage(),
           '/loginpage' : (context) => LoginPage(),
+          '/notipage': (context) => NotiPage(),
         }
     );
   }

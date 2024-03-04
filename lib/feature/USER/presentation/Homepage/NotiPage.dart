@@ -1,18 +1,12 @@
-import 'package:citizen/feature/USER/Function/Drawer.dart';
 import 'package:citizen/feature/USER/Function/TextBox.dart';
 import 'package:flutter/material.dart';
+import 'package:citizen/feature/USER/Function/Drawer.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 
+class NotiPage extends StatelessWidget {
+  const NotiPage({super.key});
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
-
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,37 +28,22 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Center (child:Image(image: AssetImage ('assets/image/citizenicon.png'),width: 50,)),
         backgroundColor: Color.fromRGBO(68, 117, 182, 1.0),
       ),
-      body: ListView(
+      body: (
+      ListView(
         children: [
-          const SizedBox(height: 50),
-          //profilepic
-          const Icon(
-            Icons.person,
-            size: 120,
-          ),
-          const SizedBox(height: 20),
-          //useremail
-          Text("poonnawit@gmail.com",
-              textAlign: TextAlign.center,
-              style:TextStyle(color: Colors.black)),
-          const SizedBox(height: 50),
-          //userdetail
           Padding(padding: const EdgeInsets.only(left: 25.0),
             child: Text(
-              'Mydetail',
-              style: TextStyle(color:Colors.black ),
+              'Notifications',
+              style: TextStyle(color:Colors.black ,fontSize: 25),
             ) ,
           ),
-
-          //username
-
-          MyTextBox(text: 'punnawit', sectionName: 'username',),
-
-          MyTextBox(text: '25/08/02', sectionName: 'datebirthday',),
-
-          MyTextBox(text: '1206598451222', sectionName: 'idenityID',),
+          
+          MyTextBox(text: 'ท่อแตก', sectionName: 'ฟิว'),
+          MyTextBox(text: 'ทางเดินชำรุด', sectionName: 'ปุ่น'),
         ],
+      )
       ),
+
     );
   }
 }
