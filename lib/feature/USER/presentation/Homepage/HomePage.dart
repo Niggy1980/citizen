@@ -3,7 +3,7 @@ import 'package:citizen/feature/USER/Function/NavBarBottom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
+import 'package:citizen/feature/USER/presentation/Homepage/NewsPage.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -48,11 +48,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                 TextField(
                   controller: _NameController,
-                  decoration: const InputDecoration(labelText: 'ชื่อ  - นามสกุล'),
+                  decoration: const InputDecoration(labelText: 'ชื่อผู้ร้องเรียน'),
                 ),
                 TextField(
                   controller: _AddressController,
-                  decoration: const InputDecoration(labelText: 'ที่อยู่'),
+                  decoration: const InputDecoration(labelText: 'รายละเอียดสถานที่'),
                 ),
                 const SizedBox(height: 25,
                 ),
@@ -154,10 +154,10 @@ Future<void> _deleteProduct(String productId) async {
         activeColor: Colors.white,
         tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
         padding: EdgeInsets.all(16),
-        tabs: const [
-          GButton(icon: Icons.home, text: 'Home'),
-          GButton(icon: Icons.newspaper, text: 'News'),
-          GButton(icon: Icons.person, text: 'Profile'),
+        tabs:  [
+          GButton(icon: Icons.home, text: 'Home',onPressed:(){ Navigator.pushNamed(context,'/homepage');},),
+          GButton(icon: Icons.newspaper, text: 'News',onPressed:(){ Navigator.pushNamed(context,'/newspage');},),
+          GButton(icon: Icons.notifications_active, text: 'Notification',onPressed:(){ Navigator.pushNamed(context,'/notipage');},),
         ],
       ),
       body: StreamBuilder(
@@ -167,74 +167,59 @@ Future<void> _deleteProduct(String productId) async {
             return ListView.builder(
                 itemCount: streamSnapshort.data!.docs.length,
                 itemBuilder: (context, index) {
-                  final DocumentSnapshot documentSnapshot = streamSnapshort.data!.docs[index];
+                  final DocumentSnapshot documentSnapshot = streamSnapshort
+                      .data!.docs[index];
                   return Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    margin: EdgeInsets.only(top: 25,left: 25,right: 25),
+                    margin: EdgeInsets.only(top: 25, left: 25, right: 25),
                     padding: EdgeInsets.all(25),
-                    child: Row(
+                    child:
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Column (
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('เรื่อง:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                              Text('ชื่อ:'),
-                              Text('ที่อยู่:'),
-                            ],
-                          ),
+                        Text(documentSnapshot['title'],
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight
+                              .bold),),
+                        Text(documentSnapshot['name']),
+                        Text(documentSnapshot['address']),
 
-                        ),
-                    SizedBox(width: 10,),
 
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        SizedBox(height: 10,),
+                        Container( child: Row( mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(documentSnapshot['title'],style:TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                            Text(documentSnapshot['name']),
-                            Text(documentSnapshot['address']),
-                          ],
-
-                        ),
-                    SizedBox(width: 15,),
-
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                      ),
-                      margin: const EdgeInsets.only(bottom: 5),
-                      padding: EdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          Text(documentSnapshot['title'],)
-                        ],
-                      ),
-                    ),
-
-                  Align(
-                  alignment: Alignment.centerRight,
-                  child: Container( child: Row(
-                          children: [
-                            IconButton(icon:const Icon(Icons.edit),
-                            onPressed: ()=> _createOrUpdate(documentSnapshot),),
-                            IconButton(icon:const Icon(Icons.delete),
-                              onPressed: ()=> _deleteProduct(documentSnapshot.id),),
                             IconButton(icon:const Icon(Icons.comment),
                               onPressed: ()=> _comment(documentSnapshot),),
-
+                            IconButton(icon:const Icon(Icons.edit),
+                              onPressed: ()=> _createOrUpdate(documentSnapshot),),
+                            IconButton(icon:const Icon(Icons.delete),
+                              onPressed: ()=> _deleteProduct(documentSnapshot.id),),
                           ],
                         ),
 
                         ),
-                  ),
+                        SizedBox(height: 10,),
+
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                          ),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: EdgeInsets.only(left: 50,right: 50,top: 20),
+                          child: Column(
+                            children: [
+                              Center(child: Text(documentSnapshot['comment'],textAlign: TextAlign.center,))
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   );
                 }
             );
+
           }
           return const Center(
             child: CircularProgressIndicator(),

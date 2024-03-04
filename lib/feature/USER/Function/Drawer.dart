@@ -22,25 +22,6 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home,color: Colors.white,),
-            title:  Text("H O M E"), textColor: Colors.white,
-            onTap: () {
-              Navigator.pop(context);
-
-              Navigator.pushNamed(context, '/homepage');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.newspaper,color: Colors.white,),
-            title:  Text("N E W S"),textColor: Colors.white,
-            onTap: () {
-              Navigator.pop(context);
-
-              Navigator.pushNamed(context, '/newspage');
-            },
-          ),
-          //
-          ListTile(
             leading: Icon(Icons.face,color: Colors.white,),
             title:  Text("P R O F I L E"),textColor: Colors.white,
             onTap: () {

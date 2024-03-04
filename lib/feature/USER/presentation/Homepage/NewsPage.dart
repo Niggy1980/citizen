@@ -24,10 +24,10 @@ class NewsPage extends StatelessWidget {
         activeColor: Colors.white,
         tabBackgroundColor: Color.fromRGBO(219, 226, 239, 100),
         padding: EdgeInsets.all(16),
-        tabs: const [
-          GButton(icon: Icons.home, text: 'Home') ,
-          GButton (icon: Icons.newspaper, text: 'News'),
-          GButton(icon: Icons.person, text: 'Profile'),
+        tabs:  [
+          GButton(icon: Icons.home, text: 'Home',onPressed:(){ Navigator.pushNamed(context,'/homepage');},) ,
+          GButton (icon: Icons.newspaper, text: 'News',onPressed:(){ Navigator.pushNamed(context,'/newspage');},),
+          GButton(icon: Icons.notifications_active, text: 'Notification',onPressed:(){ Navigator.pushNamed(context,'/notipage');},),
         ],
       ),
     );
