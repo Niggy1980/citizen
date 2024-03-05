@@ -10,11 +10,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('อุ'),
+          backgroundColor: Colors.pink,
+          title: Text('rest Api '),
         ),
         body:  Center(
-          child: Text(
-            'หนึ่งสองเสียว',
+          child: Image.asset("assets/หหห"
+            ,
 
           ),
         ),
