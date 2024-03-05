@@ -30,6 +30,6 @@ class NewsPage extends StatelessWidget {
           GButton(icon: Icons.notifications_active, text: 'Notification',onPressed:(){ Navigator.pushNamed(context,'/notipage');},),
         ],
       ),
-    );
+      );
   }
 }
