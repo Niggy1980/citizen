@@ -3,8 +3,6 @@ import 'package:citizen/feature/USER/Function/NavBarBottom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:citizen/feature/USER/presentation/Homepage/NewsPage.dart';
-
 class HomePage extends StatefulWidget {
 
   const HomePage({super.key,
@@ -54,6 +52,11 @@ class _HomePageState extends State<HomePage> {
                   controller: _AddressController,
                   decoration: const InputDecoration(labelText: 'รายละเอียดสถานที่'),
                 ),
+                SizedBox(height: 10,),
+
+                IconButton(onPressed: () {
+                } , icon: const Icon(Icons.camera_alt)),
+
                 const SizedBox(height: 25,
                 ),
                 ElevatedButton (
