@@ -44,7 +44,9 @@ class MyApp extends StatelessWidget {
           '/homepage': (context) => HomePage(),
           '/loginpage' : (context) => LoginPage(),
           '/notipage': (context) => NotiPage(),
+
         }
+
     );
   }
 }
