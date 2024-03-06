@@ -16,13 +16,24 @@ class _NewpageState extends State<Newpage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-readAllData();
+    readAllData();
   }
   Future<void> readAllirebaseFData()async{
-   FirebaseFirestore = firestore.instance;
-    CollectionReference collectionReference = FirebaseFirestore.collection('image'
-        awaits Col
+    FirebaseFirestore firestore = FirebaseStorage.instance;
+    CollectionReference collectionReference = firestore.collection('image');
+    await collectionReference.snapshots().listen((response){
+
+      List<DocumentSnapshot> snapshots = response.documents;
+      for (var snapshot in snapshots) {
+        print('snapshot = $snapshot');
+        print('Name= ${snapshot.data['News']}news');
+      }
+
+    });
   }
+  widget Showimage(int index){}
+
+
 
 
   @override
