@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
+final formkey = GlobalKey<FormState>();
 final Idcontroller = TextEditingController();
 final Confirmpassword = TextEditingController();
 final Phonenumebercontroller = TextEditingController();
@@ -83,13 +83,23 @@ class Register extends StatelessWidget {
                       // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
                       child: Align(
                       alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 350,
-                        height: 50,
-                        child: TextField(
-                            controller: Idcontroller,
-                            decoration: InputDecoration(border: OutlineInputBorder(),labelText: " ID")),
-                     ),
+                      child: Form(
+                        key: formkey,
+                        child: SizedBox(
+                          width: 350,
+                          height: 50,
+                          child: TextFormField(
+                              controller: Idcontroller,
+                              decoration: InputDecoration(border: OutlineInputBorder(),labelText: " ID"),
+                              validator: (id){
+                                if(id!.isEmpty || !RegExp(r'^[a-z A-Z+$]').hasMatch(id)){
+                                  return "Enter correct name";
+                                }else{
+                                  return null;
+                                }
+                              },),
+                        ),
+                      ),
                    )
                   ),
                 ],
@@ -113,10 +123,10 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           obscureText: true,
                           controller: Passwordcontroller,
-                          decoration: InputDecoration(border: OutlineInputBorder(), labelText: " Password")),
+                          decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Password")),
                     ),
                   )),
                 ],
@@ -140,7 +150,7 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           obscureText: true,
                           controller: Confirmpassword,
                           decoration: InputDecoration(border: OutlineInputBorder(),labelText: " Confirm password")),
@@ -165,7 +175,7 @@ class Register extends StatelessWidget {
                       child: Align(
                       alignment: Alignment.center,
                       child: SizedBox(width: 350, height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           controller: Firstnamecontroller,
                           decoration: InputDecoration(border: OutlineInputBorder(), labelText: " Firstname")),
                     ),
@@ -191,7 +201,7 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           controller: Lastnamecontroller,
                           decoration: InputDecoration(border: OutlineInputBorder(),labelText: " Lastname")),
                     ),
@@ -217,7 +227,7 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           controller: IdenityIDcontroller,
                           decoration: InputDecoration(border: OutlineInputBorder(), labelText: " Idenity ID")),
                     ),
@@ -243,7 +253,7 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           controller: Datebirthcontroller,
                           decoration: InputDecoration(border: OutlineInputBorder(), labelText: " Date of birth (DD/MM/YYYY)",
                           )),
@@ -270,7 +280,7 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           controller: Emailcontroller,
                           decoration: InputDecoration(border: OutlineInputBorder(),labelText: " E-mail")),
                     ),
@@ -296,7 +306,7 @@ class Register extends StatelessWidget {
                     child: SizedBox(
                       width: 350,
                       height: 50,
-                      child: TextField(
+                      child: TextFormField(
                           controller: Phonenumebercontroller,
                           decoration: InputDecoration(border: OutlineInputBorder(), labelText: " Phonoenumber")),
                     ),

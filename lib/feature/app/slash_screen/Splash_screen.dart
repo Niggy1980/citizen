@@ -21,7 +21,6 @@ class _MyWidgetState extends State<splash> {
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
