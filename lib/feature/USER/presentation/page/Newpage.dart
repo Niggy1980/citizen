@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,10 @@ class _NewpageState extends State<Newpage> {
     super.initState();
 readAllData();
   }
-  Future<void> readAllData()async{
-    Fires
+  Future<void> readAllirebaseFData()async{
+   FirebaseFirestore = firestore.instance;
+    CollectionReference collectionReference = FirebaseFirestore.collection('image'
+        awaits Col
   }
 
 
