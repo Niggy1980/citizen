@@ -18,7 +18,7 @@ class _NewpageState extends State<Newpage> {
 readAllData();
   }
   Future<void> readAllData()async{
-    Firest
+    Fires
   }
 
 
