@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:citizen/feature/USER/Function/Drawer.dart';
 import 'package:citizen/feature/USER/Function/NavBarBottom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -23,6 +25,9 @@ class _HomePageState extends State<HomePage> {
   final  _AddressController = TextEditingController();
   final  _CommentController = TextEditingController();
   final  complaint = FirebaseFirestore.instance.collection('complaint');
+
+  String imageUrl='';
+
 
   //add
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot])async{
@@ -62,7 +67,28 @@ class _HomePageState extends State<HomePage> {
 
                   ImagePicker imagePicker=ImagePicker();
                   XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                  print("${file?.path}");
+                  print('${file?.path}');
+
+                  if(file!=null) return;
+                  //import dart core
+                  String uniqueFileName=DateTime.now().microsecondsSinceEpoch.toString();
+
+
+                  //reference to storege root
+                  Reference referenceRoot=FirebaseStorage.instance.ref();
+                  Reference referenceDirImges=referenceRoot.child('complaint');
+
+                  //reference for image to storege root
+                  Reference referenceImageToUpload=referenceDirImges.child(uniqueFileName);
+                  //handle error/success
+                  try {
+                    //storeget to file
+                    await referenceImageToUpload.putFile(File(file!.path));
+                    //success get the dowload url
+                    imageUrl=await referenceImageToUpload.getDownloadURL();
+
+
+                  }catch(error){}
 
 
                 } , icon: const Icon(Icons.camera_alt)),
