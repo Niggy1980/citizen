@@ -3,6 +3,8 @@ import 'package:citizen/feature/USER/Function/NavBarBottom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 class HomePage extends StatefulWidget {
 
@@ -53,6 +55,18 @@ class _HomePageState extends State<HomePage> {
                   controller: _AddressController,
                   decoration: const InputDecoration(labelText: 'รายละเอียดสถานที่'),
                 ),
+                SizedBox(height: 10,),
+                //image
+                IconButton(onPressed: () async {
+
+
+                  ImagePicker imagePicker=ImagePicker();
+                  XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                  print("${file?.path}");
+
+
+                } , icon: const Icon(Icons.camera_alt)),
+
                 const SizedBox(height: 25,
                 ),
                 ElevatedButton (

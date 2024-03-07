@@ -12,26 +12,7 @@ class Newpage extends StatefulWidget {
 
 class _NewpageState extends State<Newpage> {
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    readAllData();
-  }
-  Future<void> readAllirebaseFData()async{
-    FirebaseFirestore firestore = FirebaseStorage.instance;
-    CollectionReference collectionReference = firestore.collection('image');
-    await collectionReference.snapshots().listen((response){
 
-      List<DocumentSnapshot> snapshots = response.documents;
-      for (var snapshot in snapshots) {
-        print('snapshot = $snapshot');
-        print('Name= ${snapshot.data['News']}news');
-      }
-
-    });
-  }
-  widget Showimage(int index){}
 
 
 
