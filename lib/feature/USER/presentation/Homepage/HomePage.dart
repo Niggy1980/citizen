@@ -64,33 +64,6 @@ class _HomePageState extends State<HomePage> {
                 //image
                 IconButton(onPressed: () async {
 
-
-                  ImagePicker imagePicker=ImagePicker();
-                  XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                  print('${file?.path}');
-
-                  if(file!=null) return;
-                  //import dart core
-                  String uniqueFileName=DateTime.now().microsecondsSinceEpoch.toString();
-
-
-                  //reference to storege root
-                  Reference referenceRoot=FirebaseStorage.instance.ref();
-                  Reference referenceDirImges=referenceRoot.child('complaint');
-
-                  //reference for image to storege root
-                  Reference referenceImageToUpload=referenceDirImges.child(uniqueFileName);
-                  //handle error/success
-                  try {
-                    //storeget to file
-                    await referenceImageToUpload.putFile(File(file!.path));
-                    //success get the dowload url
-                    imageUrl=await referenceImageToUpload.getDownloadURL();
-
-
-                  }catch(error){}
-
-
                 } , icon: const Icon(Icons.camera_alt)),
 
                 const SizedBox(height: 25,
